@@ -1,3 +1,16 @@
 jdk-25.0.1+8/
 jdk-25.0.1+8/
 jdk-25.0.1+8/
+# Ignorar credenciales
+*.json
+
+# Ignorar dependencias y archivos de build
+target/
+*.class
+*.jar
+*.log
+
+# Archivos del sistema
+.DS_Store
+.idea/
+.vscode/
