@@ -10,8 +10,9 @@ public class ConexionTest {
     public static void main(String[] args) {
         try {
             // Cargar credenciales
-            FileInputStream serviceAccount = new FileInputStream("C:\\Users\\daniel.munoz\\Desktop\\ProyectoFinalProgramacion2\\src\\proyectoprogra2-d9a75-firebase-adminsdk-fbsvc-b7f4a5c2f1.json"
-);
+            FileInputStream serviceAccount = new FileInputStream(
+                "C:\\Users\\daniel.munoz\\Desktop\\ProyectoFinalProgramacion2\\src\\proyectoprogra2-d9a75-firebase-adminsdk-fbsvc-b7f4a5c2f1.json"
+            );
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -29,11 +30,11 @@ public class ConexionTest {
             // Crear instancia de tu clase Consultar
             Consultar consultar = new Consultar(db);
 
-            // 🧾 Mostrar todas las tareas desde Firestore
-            consultar.mostrarTareas();
+            // 🧾 Mostrar todas las tareas y diario desde Firestore
+            consultar.mostrarDatos();
 
         } catch (IOException e) {
-            System.out.println(" Error al conectar con Firestore: " + e.getMessage());
+            System.out.println("Error al conectar con Firestore: " + e.getMessage());
         }
     }
 }
