@@ -1,28 +1,45 @@
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        try {
-            // Ruta al archivo de credenciales
-            FileInputStream serviceAccount = new FileInputStream("src/proyectoprogra2-d9a75-firebase-adminsdk-fbsvc-b7f4a5c2f1.json");
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
 
-            FirestoreOptions options = FirestoreOptions.newBuilder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .build();
+        do {
+            System.out.println("\n===== MENÚ PRINCIPAL =====");
+            System.out.println("1. Agregar tarea");
+            System.out.println("2. Modificar estado de tarea");
+            System.out.println("3. Consultar estado de tarea");
+            System.out.println("4. Eliminar estado de tarea");
+            System.out.println("5. Diario de tareas");
+            System.out.println("6. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
 
-            Firestore db = options.getService();
-            System.out.println("✅ Conectado correctamente a Firestore");
+            switch (opcion) {
+                case 1:
+                    System.out.println("👋 Saliendo del programa...");
+                    break;
+                case 2:
+                    // ModificarTarea.modificarEstado();
+                    break;
+                case 3:
+                    System.out.println("👋 Saliendo del programa...");
+                    break;    
+                case 4:
+                    System.out.println("👋 Saliendo del programa...");
+                    break;
+                case 5:
+                    System.out.println("👋 Saliendo del programa...");
+                    break;
+                case 6:
+                    System.out.println("👋 Saliendo del programa...");
+                    break;
+                default:
+                    System.out.println("❌ Opción no válida");
+            }
+        } while (opcion != 6);
 
-            // Ejemplo: imprimir la referencia a una colección
-            System.out.println("Colección de ejemplo: " + db.collection("usuarios").getPath());
-
-        } catch (IOException e) {
-            System.out.println("❌ Error al conectar con Firestore: " + e.getMessage());
-        }
+        scanner.close();
     }
 }
-
