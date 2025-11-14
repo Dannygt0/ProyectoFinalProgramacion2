@@ -18,7 +18,7 @@ public class AgregarTarea{
 
             System.out.println("=== AGREGAR TAREA ===");
 
-            // El usuario ingresa el número de la tarea
+            // ✔️ El usuario ingresa el número de la tarea
             System.out.print("Ingrese número de tarea: ");
             int numeroTarea = in.nextInt();
             in.nextLine(); // limpiar buffer
@@ -31,8 +31,12 @@ public class AgregarTarea{
             tarea.put("descripcion", descripcion);
             tarea.put("realizada", false);
 
-            ApiFuture<DocumentReference> future = db.collection("tareas").add(tarea);
-            DocumentReference docRef = future.get();
+            // ✔️ Guardar la tarea usando el ID proporcionado por el usuario
+            DocumentReference docRef = db.collection("tareas")
+                                        .document(String.valueOf(numeroTarea));
+
+            ApiFuture<?> future = docRef.set(tarea);
+            future.get();  // esperar a que termine
 
             System.out.println("Tarea agregada exitosamente con ID: " + numeroTarea);
 
