@@ -70,27 +70,26 @@ private void mostrarTareasPorEstado(boolean estado) throws InterruptedException,
     }
 }
 
+private void mostrarDiario() throws InterruptedException, ExecutionException {
+    ApiFuture<QuerySnapshot> future = db.collection("diario").get();
+    List<QueryDocumentSnapshot> documentos = future.get().getDocuments();
 
-    private void mostrarDiario() throws InterruptedException, ExecutionException {
-        ApiFuture<QuerySnapshot> future = db.collection("diario").get();
-        List<QueryDocumentSnapshot> documentos = future.get().getDocuments();
+    System.out.println("\n----- DIARIO -----");
+    if (documentos.isEmpty()) {
+        System.out.println("No hay entradas en el diario.");
+    } else {
+        for (QueryDocumentSnapshot doc : documentos) {
+            String comentario = doc.getString("comentario");
+            Timestamp ts = doc.getTimestamp("fecha");
+            String fechaHora = (ts != null) ? ts.toDate().toString() : "No especificada";
 
-        System.out.println("\n----- DIARIO -----");
-        if (documentos.isEmpty()) {
-            System.out.println("No hay entradas en el diario.");
-        } else {
-            for (QueryDocumentSnapshot doc : documentos) {
-                String comentario = doc.getString("comentario");
-                Timestamp ts = doc.getTimestamp("fechaHora");
-                String fechaHora = (ts != null) ? ts.toDate().toString() : "No especificada";
-
-                System.out.println("- ID: " + doc.getId());
-                System.out.println("  Comentario: " + (comentario != null ? comentario : "Sin comentario"));
-                System.out.println("  Fecha y hora: " + fechaHora);
-                System.out.println();
-            }
+            System.out.println("- ID: " + doc.getId());
+            System.out.println("  Comentario: " + (comentario != null ? comentario : "Sin comentario"));
+            System.out.println("  Fecha y hora: " + fechaHora);
+            System.out.println();
         }
     }
+}
 
     private void regresarMenu() {
         System.out.println("\nPresione ENTER para regresar al menú principal...");

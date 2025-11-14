@@ -14,21 +14,21 @@
     </properties>
 
     <dependencies>
-        <!-- ✅ Firebase Admin SDK -->
+        <!-- Firebase Admin SDK -->
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>9.2.0</version>
         </dependency>
 
-        <!-- ✅ Google Cloud Firestore -->
+        <!-- Google Cloud Firestore -->
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-firestore</artifactId>
             <version>3.13.0</version>
         </dependency>
 
-        <!-- ✅ Gson -->
+        <!-- Gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -38,7 +38,7 @@
 
     <build>
         <plugins>
-            <!-- ⚙️ Compilador Java -->
+            <!-- Compilador Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -49,14 +49,13 @@
                 </configuration>
             </plugin>
 
-            <!-- ▶️ Plugin para ejecutar una clase Java -->
+            <!-- Ejecutar clase Java -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.2</version>
                 <configuration>
-                    <!-- Cambia esto si tu clase tiene un paquete -->
-                    <mainClass>ConexionTest</mainClass>
+                    <mainClass>App</mainClass>
                 </configuration>
             </plugin>
         </plugins>
