@@ -31,22 +31,22 @@ public class App {
                     System.out.println("👋 Saliendo del programa...");
                     break;
                 case 4:
-                    System.out.println("👋 Saliendo del programa...");
+                    EliminarTarea.eliminarTarea();
                     break;
-                    case 5:
-        try {
-            Firestore db = ConexionFirestore.conectarFirestore();
-            AgregarDiario.agregarEntrada(db);
-        } catch (Exception e) {
-            System.out.println("❌ Error al conectar con Firestore: " + e.getMessage());
-        }
-        break;
+                case 5:
+                    try {
+                        Firestore db = ConexionFirestore.conectarFirestore();
+                        AgregarDiario.agregarEntrada(db);
+                    } catch (Exception e) {
+                        System.out.println("Error al conectar con Firestore: " + e.getMessage());
+                    }
+                    break;
 
                 case 6:
-                    System.out.println("👋 Saliendo del programa...");
+                    System.out.println("Saliendo del programa...");
                     break;
                 default:
-                    System.out.println("❌ Opción no válida");
+                    System.out.println("Opción no válida");
             }
         } while (opcion != 6);
 

@@ -29,7 +29,6 @@ public class EliminarTarea {
             }
             //Solicitar ID
             System.out.print("\nIngrese el ID EXACTO de la tarea que desea eliminar: ");
-            sc.nextLine(); // limpiar buffer para evitar saltos
             String id = sc.nextLine().trim();
             //Verificar si existe el ID
             DocumentReference docRef = db.collection("tareas").document(id);
