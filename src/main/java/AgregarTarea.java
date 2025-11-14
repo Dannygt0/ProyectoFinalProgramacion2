@@ -20,12 +20,8 @@ public class AgregarTarea {
             tarea.put("descripcion", descripcion);
             tarea.put("realizada", false); // ✔ nombre consistente
 
-            // ✔️ Guardar la tarea usando el ID proporcionado por el usuario
-            DocumentReference docRef = db.collection("tareas")
-                                        .document(String.valueOf(numeroTarea));
-
-            ApiFuture<?> future = docRef.set(tarea);
-            future.get();  // esperar a que termine
+            ApiFuture<DocumentReference> future = db.collection("tareas").add(tarea);
+            DocumentReference docRef = future.get();
 
             System.out.println("Tarea agregada con ID: " + docRef.getId());
 
