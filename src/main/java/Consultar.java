@@ -29,49 +29,53 @@ public class Consultar {
     }
 
     private void mostrarTareas() throws InterruptedException, ExecutionException {
-    ApiFuture<QuerySnapshot> future = db.collection("tareas").get();
-    List<QueryDocumentSnapshot> documentos = future.get().getDocuments();
+        ApiFuture<QuerySnapshot> future = db.collection("tareas").get();
+        List<QueryDocumentSnapshot> documentos = future.get().getDocuments();
 
-    System.out.println("\n----- TAREAS -----");
-    if (documentos.isEmpty()) {
-        System.out.println("No tiene ninguna tarea registrada.");
-    } else {
-        System.out.println("Listado general de tareas:");
-        for (QueryDocumentSnapshot doc : documentos) {
-            String descripcion = doc.getString("descripcion");
-            Boolean realizada = doc.getBoolean("realizada");
+        System.out.println("\n----- TAREAS -----");
+        if (documentos.isEmpty()) {
+            System.out.println("No tiene ninguna tarea registrada.");
+        } else {
+            System.out.println("Listado general de tareas:");
+            for (QueryDocumentSnapshot doc : documentos) {
+                String descripcion = doc.getString("descripcion");
+                Boolean realizada = doc.getBoolean("realizada");
 
-            System.out.println("- Descripción: " + descripcion);
-            System.out.println("  Realizada: " + (realizada != null && realizada ? "Sí" : "No"));
+                System.out.println("- Descripción: " + descripcion);
+                System.out.println("  Realizada: " + (realizada != null && realizada ? "Sí" : "No"));
+            }
+
+            System.out.println("\nTareas no realizadas:");
+            mostrarTareasPorEstado(false);
+
+            System.out.println("\nTareas realizadas:");
+            mostrarTareasPorEstado(true);
         }
-
-        System.out.println("\nTareas no realizadas:");
-        mostrarTareasPorEstado(false);
-
-        System.out.println("\nTareas realizadas:");
-        mostrarTareasPorEstado(true);
     }
-}
 
-private void mostrarTareasPorEstado(boolean estado) throws InterruptedException, ExecutionException {
-    ApiFuture<QuerySnapshot> future = db.collection("tareas")
-            .whereEqualTo("realizada", estado)
+    private void mostrarTareasPorEstado(boolean estado) throws InterruptedException, ExecutionException {
+        ApiFuture<QuerySnapshot> future = db.collection("tareas")
+                .whereEqualTo("realizada", estado)
+                .get();
+
+        List<QueryDocumentSnapshot> tareas = future.get().getDocuments();
+
+        if (tareas.isEmpty()) {
+            System.out.println("(No hay tareas " + (estado ? "realizadas" : "pendientes") + ")");
+        } else {
+            for (QueryDocumentSnapshot doc : tareas) {
+                String descripcion = doc.getString("descripcion");
+                System.out.println("- " + descripcion + " → " + (estado ? "Realizada" : "Pendiente"));
+            }
+        }
+    }
+
+    private void mostrarDiario() throws InterruptedException, ExecutionException {
+
+    ApiFuture<QuerySnapshot> future = db.collection("diario")
+            .orderBy("fecha", Query.Direction.ASCENDING) // Orden correcto
             .get();
 
-    List<QueryDocumentSnapshot> tareas = future.get().getDocuments();
-
-    if (tareas.isEmpty()) {
-        System.out.println("(No hay tareas " + (estado ? "realizadas" : "pendientes") + ")");
-    } else {
-        for (QueryDocumentSnapshot doc : tareas) {
-            String descripcion = doc.getString("descripcion");
-            System.out.println("- " + descripcion + " → " + (estado ? "Realizada" : "Pendiente"));
-        }
-    }
-}
-
-private void mostrarDiario() throws InterruptedException, ExecutionException {
-    ApiFuture<QuerySnapshot> future = db.collection("diario").get();
     List<QueryDocumentSnapshot> documentos = future.get().getDocuments();
 
     System.out.println("\n----- DIARIO -----");
@@ -80,11 +84,16 @@ private void mostrarDiario() throws InterruptedException, ExecutionException {
     } else {
         for (QueryDocumentSnapshot doc : documentos) {
             String comentario = doc.getString("comentario");
+            String categoria = doc.getString("categoria");
             Timestamp ts = doc.getTimestamp("fecha");
-            String fechaHora = (ts != null) ? ts.toDate().toString() : "No especificada";
+
+            String fechaHora = (ts != null)
+                    ? ts.toDate().toString()
+                    : "No especificada";
 
             System.out.println("- ID: " + doc.getId());
             System.out.println("  Comentario: " + (comentario != null ? comentario : "Sin comentario"));
+            System.out.println("  Categoria: " + (categoria != null ? categoria : "N/A"));
             System.out.println("  Fecha y hora: " + fechaHora);
             System.out.println();
         }
