@@ -3,7 +3,15 @@ import com.google.api.core.ApiFuture;
 import java.util.*;
 
 public class ModificarTarea {
+    private static Firestore conectarFirestore() throws Exception {
+        FileInputStream serviceAccount = new FileInputStream("src/proyectoprogra2-d9a75-firebase-adminsdk-fbsvc-b7f4a5c2f1[1].json");
 
+        FirestoreOptions options = FirestoreOptions.newBuilder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
+
+        return options.getService();
+    }
     public static void modificarEstado() {
         try {
             Firestore db = ConexionFirestore.conectarFirestore();
