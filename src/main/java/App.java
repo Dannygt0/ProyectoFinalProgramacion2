@@ -28,7 +28,7 @@ public class App {
                 case 3:
                     Consultar consultar = new Consultar();
                     consultar.mostrarDatos();
-                    System.out.println("👋 Saliendo del programa...");
+                    System.out.println("Saliendo del programa...");
                     break;
                 case 4:
                     EliminarTarea.eliminarTarea();
